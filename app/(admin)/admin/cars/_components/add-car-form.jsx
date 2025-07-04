@@ -634,7 +634,7 @@ export const AddCarForm = () => {
 
                 <Button
                   type="submit"
-                  className="w-full md:w-auto"
+                  className="w-full md:w-auto cursor-pointer"
                   disabled={addCarLoading}
                 >
                   {addCarLoading ? (
@@ -692,7 +692,7 @@ export const AddCarForm = () => {
                             </>
                           ) : (
                             <>
-                              <Camera className="mr-2 h-4 w-4" />
+                              <Camera className="mr-2 h-4 w-4 cursor-pointer" />
                               Extract Details
                             </>
                           )}
