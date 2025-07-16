@@ -1,4 +1,7 @@
-# Cars Next.js Project
+# KITHUSIBRIAN2004
+
+
+# VEHICLES Next.js Project
 
 This repository contains a sophisticated Next.js application focused on car browsing and search functionalities. The project leverages modern React features, server-side rendering, and integration with backend services to deliver a performant and scalable web application.
 
@@ -12,9 +15,10 @@ The application provides users with the ability to explore various car models ca
 - **Styling:** Tailwind CSS for utility-first, responsive styling
 - **Backend Integration:** Supabase for authentication, database, and real-time data
 - **State Management:** React hooks and context API for local state handling
-- **Data Layer:** Prisma ORM (noted from lib/prisma.js) for database interactions (if applicable)
+- **Data Layer:** Prisma ORM for database interactionS
 - **Component Design:** Reusable UI components including car cards, search inputs, accordions, dialogs, and more
 - **Image Optimization:** Next.js Image component and static assets in the `public` directory for optimized loading
+-  **Gemini API:** Uses Gemini AI to fetch Car Information from Gemini
 
 ## Key Features
 
@@ -23,6 +27,7 @@ The application provides users with the ability to explore various car models ca
 - User authentication and session management via Supabase
 - Responsive design with accessibility considerations
 - Modular and scalable codebase following best practices
+- Advanced Search Functionality with Gemini AI(On The Backend)
 
 ## Project Structure
 
@@ -41,6 +46,8 @@ The application provides users with the ability to explore various car models ca
 ### Installation
 
 Clone the repository and install dependencies:
+
+(...Touch on how to set up a database a supabase database for storage and how to seed data)
 
 ```bash
 git clone <your-repo-url>
