@@ -81,6 +81,7 @@ Currently, no automated tests are included. Manual testing is recommended for ke
 ## Deployment
 
 This Next.js application is optimized for deployment on Vercel. You can deploy directly from your GitHub repository using the Vercel platform.
+The Project also uses docker for containerization thou it isnt supported by vercel.Hence not included in The Github commit
 
 Refer to the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for detailed instructions.
 
