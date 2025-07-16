@@ -13,7 +13,8 @@ The application provides users with the ability to explore various car models ca
 
 - **Framework:** Next.js (React 18+) with App Router for enhanced routing and layouts
 - **Styling:** Tailwind CSS for utility-first, responsive styling
-- **Backend Integration:** Supabase for authentication, database, and real-time data
+- **SHADCN UI:** Utilizes reusable components like button,calendar etc from SHADCNUI for smooth operation,functionality and reusability
+- **Backend Integration:** Supabase for authentication, database, and real-time data handling and sharing
 - **State Management:** React hooks and context API for local state handling
 - **Data Layer:** Prisma ORM for database interactionS
 - **Component Design:** Reusable UI components including car cards, search inputs, accordions, dialogs, and more
@@ -95,7 +96,11 @@ Contributions are welcome! Please open issues or submit pull requests for bug fi
 - [Supabase Documentation](https://supabase.com/docs)
 - [Prisma ORM Documentation](https://www.prisma.io/docs/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [SHADCN UI Documentation](https://ui.shadcn.com/docs)
+
+
 
 ---
 
-You are full of shiiiit 😂😂😂😂😂😂😂😂😂
+You are full of shiiiit 😂😂😂😂😂😂😂😂
+POV: Terrible UI from the most cooked person in the world rn
