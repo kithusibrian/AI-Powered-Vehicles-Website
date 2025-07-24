@@ -53,7 +53,7 @@ Clone the repository and install dependencies:
 ```bash
 git clone <your-repo-url>
 cd cars
-npm install
+npm install (Use --Peer-deps to resovle conflicts)- some modules are also yet not compatible with React 17
 ```
 
 ### Running the Development Server
