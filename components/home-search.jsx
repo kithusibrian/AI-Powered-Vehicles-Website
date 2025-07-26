@@ -1,18 +1,17 @@
-"use client"
+"use client";
 
-
-import React, {useState} from 'react'
-import { Input } from './ui/input'
-import { Camera, Upload } from 'lucide-react'
-import { Button } from './ui/button'
-import { useDropzone } from 'react-dropzone'
-import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import React, { useState } from "react";
+import { Input } from "./ui/input";
+import { Camera, Upload } from "lucide-react";
+import { Button } from "./ui/button";
+import { useDropzone } from "react-dropzone";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const HomeSearch = () => {
   //States
-  const [ searchTerm, setSearchTerm ] = useState("")
-  const [ isImageSearchActive, setIsImageSearchActive ] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isImageSearchActive, setIsImageSearchActive] = useState(false);
   const [searchImage, setSearchImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -25,7 +24,7 @@ const HomeSearch = () => {
       toast.error("Please Enter a search term");
       return;
     }
-     router.push(`/cars?search=${encodeURIComponent(searchTerm)}`);
+    router.push(`/cars?search=${encodeURIComponent(searchTerm)}`);
   };
   const handleImageSearch = async (e) => {
     e.preventDefault();
@@ -63,57 +62,55 @@ const HomeSearch = () => {
         toast.error("Failed to read the image");
       };
       reader.readAsDataURL(file);
-
-
     }
   };
-  const {getRootProps, getInputProps, isDragActive, isDragReject} = useDropzone({
-    onDrop,
-    accept: {
+  const { getRootProps, getInputProps, isDragActive, isDragReject } =
+    useDropzone({
+      onDrop,
+      accept: {
         "image/*": [".jpeg", ".jpg", ".png"],
       },
-  })
-//From React Dropzone
+    });
+  //From React Dropzone
 
   return (
     <div>
-      <form onSubmit={handleTextSubmit} > 
-        <div className = "relative flex items-center">
+      <form onSubmit={handleTextSubmit}>
+        <div className="relative flex items-center">
           <Input
-          type="text"
-          placeholder="Enter Make,Model, or use Our Ai Image Search"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 pr-12 py-6 w-full rounded-full border-gray-300 bg-white/95 backdrop-blur-sm"
-          
+            type="text"
+            placeholder="Enter Make,Model, or use Our Ai Image Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 pr-12 py-3 w-full rounded-full border border-gray-300 bg-white/95 backdrop-blur-sm text-sm sm:text-base placeholder:text-gray-500"
           />
 
           <div className="absolute right-[100px]">
             <Camera
-            size={35}
+              size={35}
               onClick={() => setIsImageSearchActive(!isImageSearchActive)}
               className="cursor-pointer rounded-xl p-1.5"
               style={{
                 background: isImageSearchActive ? "black" : "",
                 color: isImageSearchActive ? "white" : "",
               }}
-            
             />
           </div>
-          <Button type="submit" className="absolute right-2 rounded-full cursor-pointer">
-                      Search
-                    </Button>
-          </div>
-          
-
+          <Button
+            type="submit"
+            className="absolute right-2 rounded-full cursor-pointer"
+          >
+            Search
+          </Button>
+        </div>
       </form>
       {isImageSearchActive && (
-        <div className = "mt-4">
+        <div className="mt-4">
           <form onSubmit={handleImageSearch}>
             <div className="border-2 border-dashed border-gray-300 rounded-3xl p-6 text-center">
               {imagePreview ? (
-              <div className="flex flex-col items-center">
-                <img
+                <div className="flex flex-col items-center">
+                  <img
                     src={imagePreview}
                     alt="Car preview"
                     className="h-40 object-contain mb-4"
@@ -129,25 +126,27 @@ const HomeSearch = () => {
                   >
                     Remove Image
                   </Button>
-
-              </div>) : (
-                <div className = "cursor-pointer" {...getRootProps()}>
-      <input {...getInputProps()} />
-      <div className="flex flex-col items-center">
-      <Upload className="h-12 w-12 text-gray-400 mb-2" />
-      <p className="text-gray-500 mb-2">
-      {isDragActive && !isDragReject
+                </div>
+              ) : (
+                <div className="cursor-pointer" {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <div className="flex flex-col items-center">
+                    <Upload className="h-12 w-12 text-gray-400 mb-2" />
+                    <p className="text-gray-500 mb-2">
+                      {isDragActive && !isDragReject
                         ? "Leave the file here to upload"
                         : "Drag & drop a car image or click to select"}
-      </p>
-      {isDragReject && (
-                      <p className="text-red-500 mb-2">Invalid image type selection</p>
+                    </p>
+                    {isDragReject && (
+                      <p className="text-red-500 mb-2">
+                        Invalid image type selection
+                      </p>
                     )}
-      <p className="text-gray-400 text-sm">
+                    <p className="text-gray-400 text-sm">
                       Supports: JPG, PNG (max 5MB)
                     </p>
-    </div>
-    </div>
+                  </div>
+                </div>
               )}
             </div>
 
@@ -157,18 +156,14 @@ const HomeSearch = () => {
                 className="w-full cursor-pointer mt-2"
                 disabled={isUploading}
               >
-                {isUploading
-                  ? "Uploading..."
-                  : "Search with this Image"}
+                {isUploading ? "Uploading..." : "Search with this Image"}
               </Button>
             )}
-
           </form>
         </div>
       )}
-
     </div>
-  )
-}
+  );
+};
 
-export default HomeSearch
+export default HomeSearch;
