@@ -17,6 +17,12 @@ const HomeSearch = () => {
   const [isUploading, setIsUploading] = useState(false);
 
   const router = useRouter();
+
+   //Logic for searching with AI via an image upload
+
+   
+
+
   //Functions
   const handleTextSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +39,7 @@ const HomeSearch = () => {
       return;
     }
 
-    //Add Logic here later on for the search with image
+   
   };
 
   //From React Dropzone
