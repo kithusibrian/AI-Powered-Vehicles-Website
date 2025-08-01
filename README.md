@@ -19,7 +19,9 @@ The application provides users with the ability to explore various car models ca
 - **Data Layer:** Prisma ORM for database interactionS
 - **Component Design:** Reusable UI components including car cards, search inputs, accordions, dialogs, and more
 - **Image Optimization:** Next.js Image component and static assets in the `public` directory for optimized loading
--  **Gemini API:** Uses Gemini AI to fetch Car Information from Gemini
+- **Gemini API:** Uses Gemini AI to fetch Car Information from Gemini.
+- **Arcjet:** Uses Arcjet for rate limiting to control the number of requests per hour the user can make through the home search page.
+
 
 ## Key Features
 
@@ -97,6 +99,8 @@ Contributions are welcome! Please open issues or submit pull requests for bug fi
 - [Prisma ORM Documentation](https://www.prisma.io/docs/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [SHADCN UI Documentation](https://ui.shadcn.com/docs)
+- [Arcjet Documentation](https://docs.arcjet.com/)
+
 
 
 
