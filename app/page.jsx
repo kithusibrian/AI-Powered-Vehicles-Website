@@ -7,14 +7,17 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { SignedOut } from "@clerk/nextjs";
-import CarCard from "@/components/car-card";
+import { CarCard } from "@/components/car-card";
 import HomeSearch from "@/components/home-search";
 import Link from "next/link";
 import Image from "next/image";
-import { bodyTypes, featuredCars, carMakes, faqItems } from "@/lib/data";
+import { bodyTypes, carMakes, faqItems } from "@/lib/data";
+import { getFeaturedCars } from "@/actions/home";
 
 export default async function Home() {
- 
+  //Import the server action for getting the featured cars
+  const featuredCars = await getFeaturedCars();
+
   return (
     <div className="flex flex-col pt-20">
       {/* Hero Section with Gradient Title */}
@@ -171,7 +174,6 @@ export default async function Home() {
           </h2>
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((faq, index) => (
-
               <AccordionItem key={index} value={`item-${index}`}>
                 <AccordionTrigger>{faq.question}</AccordionTrigger>
                 <AccordionContent>{faq.answer}</AccordionContent>

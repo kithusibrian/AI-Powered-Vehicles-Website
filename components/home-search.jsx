@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { Camera, Upload } from "lucide-react";
 import { Button } from "./ui/button";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import useFetch from "@/hooks/use-fetch";
+import { processImageSearch } from "@/actions/home";
 
 const HomeSearch = () => {
   //States
@@ -18,10 +20,14 @@ const HomeSearch = () => {
 
   const router = useRouter();
 
-   //Logic for searching with AI via an image upload
-
-   
-
+  //Logic for searching with AI via an image upload
+  // Use the useFetch hook for image processing with gemini
+  const {
+    loading: isProcessing,
+    fn: processImageFn,
+    data: processResult,
+    error: processError,
+  } = useFetch(processImageSearch);
 
   //Functions
   const handleTextSubmit = (e) => {
@@ -38,9 +44,35 @@ const HomeSearch = () => {
       toast.error("You need to upload an image first");
       return;
     }
-
-   
+    //AI logic for seaching using images with Gemini
+    await processImageFn(searchImage);
   };
+
+  //Handle all search errors
+
+  useEffect(() => {
+    if (processResult?.success) {
+      const params = new URLSearchParams();
+
+      // Add extracted params to the search
+      if (processResult.data.make) params.set("make", processResult.data.make);
+      if (processResult.data.bodyType)
+        params.set("bodyType", processResult.data.bodyType);
+      if (processResult.data.color)
+        params.set("color", processResult.data.color);
+
+      // Redirect to search results
+      router.push(`/cars?${params.toString()}`);
+    }
+  }, [processResult, router]);
+
+  useEffect(() => {
+    if (processError) {
+      toast.error(
+        "Failed to analyze image: " + (processError.message || "Unknown error")
+      );
+    }
+  }, [processError]);
 
   //From React Dropzone
   const onDrop = (acceptedFiles) => {
@@ -160,9 +192,13 @@ const HomeSearch = () => {
               <Button
                 type="submit"
                 className="w-full cursor-pointer mt-2"
-                disabled={isUploading}
+                disabled={isUploading || isUploading}
               >
-                {isUploading ? "Uploading..." : "Search with this Image"}
+                {isUploading
+                  ? "Uploading..."
+                  : isProcessing
+                  ? "Analyzing the image..."
+                  : "Search with this Image"}
               </Button>
             )}
           </form>

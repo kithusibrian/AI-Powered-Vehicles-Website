@@ -7,9 +7,8 @@ import Image from "next/image";
 import { checkUser } from "@/lib/checkUser";
 
 const Header = async ({ isAdminPage = false }) => {
-
   const user = await checkUser();
-  const isAdmin = user?.role==="ADMIN";
+  const isAdmin = user?.role === "ADMIN";
   return (
     <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
       <nav className="mx-auto px-4 py-4 flex items-center justify-between">
@@ -31,7 +30,10 @@ const Header = async ({ isAdminPage = false }) => {
           {isAdminPage ? (
             <>
               <Link href="/">
-                <Button variant="outline" className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  className="flex items-center gap-2 cursor-pointer"
+                >
                   <ArrowLeft size={18} />
                   <span>Back to App</span>
                 </Button>
@@ -46,19 +48,24 @@ const Header = async ({ isAdminPage = false }) => {
                 >
                   <Button variant="outline">
                     <CarFront size={18} />
-                    <span className="hidden md:inline">My Reservations</span>
+                    <span className="hidden md:inline cursor-pointer">
+                      My Reservations
+                    </span>
                   </Button>
                 </Link>
               )}
               <a href="/saved-cars">
-                <Button className="flex items-center gap-2">
+                <Button className="flex items-center gap-2 cursor-pointer">
                   <Heart size={18} />
                   <span className="hidden md:inline">Saved Cars</span>
                 </Button>
               </a>
               {isAdmin && (
                 <Link href="/admin">
-                  <Button variant="outline" className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
                     <Layout size={18} />
                     <span className="hidden md:inline">Admin Portal</span>
                   </Button>
