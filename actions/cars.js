@@ -3,13 +3,12 @@
 //Logic for processing image with Gemini AI
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "@/lib/prisma";
-import { createClient } from "@/lib/supabase";
 import { auth } from "@clerk/nextjs/server";
 import { serializeCarData } from "@/lib/helper";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
 //Function to convert file to base 64
 
@@ -17,6 +16,27 @@ async function fileToBase64(file) {
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
   return buffer.toString("base64");
+}
+
+function getSupabaseAdminClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY;
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    throw new Error(
+      "Missing Supabase server config. Set NEXT_PUBLIC_SUPABASE_URL and either SUPABASE_SERVICE_ROLE_KEY or SUPABASE_SECRET_KEY in .env",
+    );
+  }
+
+  return createSupabaseClient(supabaseUrl, serviceRoleKey);
+}
+
+function parseNumberValue(value) {
+  if (value === null || value === undefined) return NaN;
+  if (typeof value === "number") return value;
+  const normalized = String(value).replace(/[^0-9.-]/g, "");
+  return normalized ? Number(normalized) : NaN;
 }
 
 export async function processCarImageWithAI(file) {
@@ -30,7 +50,7 @@ export async function processCarImageWithAI(file) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     //get the model
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
 
     const base64Image = await fileToBase64(file);
 
@@ -103,12 +123,12 @@ export async function processCarImageWithAI(file) {
       ];
 
       const missingFields = requiredFields.filter(
-        (field) => !(field in carDetails)
+        (field) => !(field in carDetails),
       );
 
       if (missingFields.length > 0) {
         throw new Error(
-          `AI response missing required fields: ${missingFields.join(", ")}`
+          `AI response missing required fields: ${missingFields.join(", ")}`,
         );
       }
 
@@ -118,7 +138,7 @@ export async function processCarImageWithAI(file) {
         data: carDetails,
       };
     } catch (error) {
-      console.error("Failed to parse AI response:", parseError);
+      console.error("Failed to parse AI response:", error);
       console.log("Raw response:", text);
       return {
         success: false,
@@ -148,9 +168,8 @@ export async function addCar({ carData, images }) {
     const carId = uuidv4();
     const folderPath = `cars/${carId}`;
 
-    // Initialize Supabase client for server-side operations
-    const cookieStore = await cookies();
-    const supabase = createClient(cookieStore);
+    // Use service role on server actions so storage uploads are not blocked by anon RLS.
+    const supabase = getSupabaseAdminClient();
 
     // Upload all images to Supabase storage
     const imageUrls = [];
@@ -198,20 +217,39 @@ export async function addCar({ carData, images }) {
       throw new Error("No valid images were uploaded");
     }
 
+    const year = Number.parseInt(String(carData.year), 10);
+    const price = parseNumberValue(carData.price);
+    const mileage = Number.parseInt(
+      String(parseNumberValue(carData.mileage)),
+      10,
+    );
+    const seats =
+      carData.seats === null ||
+      carData.seats === undefined ||
+      carData.seats === ""
+        ? null
+        : Number.parseInt(String(parseNumberValue(carData.seats)), 10);
+
+    if (!Number.isFinite(year)) throw new Error("Invalid year value");
+    if (!Number.isFinite(price)) throw new Error("Invalid price value");
+    if (!Number.isFinite(mileage)) throw new Error("Invalid mileage value");
+    if (seats !== null && !Number.isFinite(seats))
+      throw new Error("Invalid seats value");
+
     // Add the car to the database
     const car = await db.car.create({
       data: {
         id: carId, // Use the same ID we used for the folder
         make: carData.make,
         model: carData.model,
-        year: carData.year,
-        price: carData.price,
-        mileage: carData.mileage,
+        year,
+        price,
+        mileage,
         color: carData.color,
         fuelType: carData.fuelType,
         transmission: carData.transmission,
         bodyType: carData.bodyType,
-        seats: carData.seats,
+        seats,
         description: carData.description,
         status: carData.status,
         featured: carData.featured,
@@ -310,8 +348,7 @@ export async function deleteCar(id) {
 
     // Delete the images from Supabase storage
     try {
-      const cookieStore = cookies();
-      const supabase = createClient(cookieStore);
+      const supabase = getSupabaseAdminClient();
 
       // Extract file paths from image URLs
       const filePaths = car.images

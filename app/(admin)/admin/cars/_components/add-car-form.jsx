@@ -240,7 +240,7 @@ export const AddCarForm = () => {
               setUploadProgress(0);
               setImageError("");
               toast.success(
-                `Successfully uploaded ${validFiles.length} images`
+                `Successfully uploaded ${validFiles.length} images`,
               );
             }
           };
@@ -266,6 +266,12 @@ export const AddCarForm = () => {
     setUploadedImages((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const parseNumberInput = (value) => {
+    if (value === null || value === undefined) return NaN;
+    const normalized = String(value).replace(/[^0-9.-]/g, "");
+    return normalized ? Number(normalized) : NaN;
+  };
+
   const onSubmit = async (data) => {
     // Check if images are uploaded
     if (uploadedImages.length === 0) {
@@ -273,13 +279,43 @@ export const AddCarForm = () => {
       return;
     }
 
+    const parsedYear = Number.parseInt(String(data.year), 10);
+    const parsedPrice = parseNumberInput(data.price);
+    const parsedMileage = Number.parseInt(
+      String(parseNumberInput(data.mileage)),
+      10,
+    );
+    const parsedSeats = data.seats
+      ? Number.parseInt(String(parseNumberInput(data.seats)), 10)
+      : null;
+
+    if (!Number.isFinite(parsedYear)) {
+      toast.error("Please enter a valid year");
+      return;
+    }
+
+    if (!Number.isFinite(parsedPrice)) {
+      toast.error("Please enter a valid price");
+      return;
+    }
+
+    if (!Number.isFinite(parsedMileage)) {
+      toast.error("Please enter a valid mileage");
+      return;
+    }
+
+    if (parsedSeats !== null && !Number.isFinite(parsedSeats)) {
+      toast.error("Please enter a valid seats value");
+      return;
+    }
+
     // Prepare data for server action
     const carData = {
       ...data,
-      year: parseInt(data.year),
-      price: parseFloat(data.price),
-      mileage: parseInt(data.mileage),
-      seats: data.seats ? parseInt(data.seats) : null,
+      year: parsedYear,
+      price: parsedPrice,
+      mileage: parsedMileage,
+      seats: parsedSeats,
     };
 
     // Call the addCar function with our useFetch hook

@@ -28,7 +28,7 @@ export async function bookTestDrive({
     if (!user) throw new Error("User not found in database");
 
     // Check if car exists and is available
-    const car = await db.car.findUnique({
+    const car = await db.car.findFirst({
       where: { id: carId, status: "AVAILABLE" },
     });
 
@@ -46,7 +46,7 @@ export async function bookTestDrive({
 
     if (existingBooking) {
       throw new Error(
-        "This time slot is already booked. Please select another time."
+        "This time slot is already booked. Please select another time.",
       );
     }
 

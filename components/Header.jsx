@@ -21,7 +21,9 @@ const Header = async ({ isAdminPage = false }) => {
             className="h-12 w-auto object-contain"
           />
           {isAdminPage && (
-            <span className="text-xs font-extralight">admin</span>
+            <span className="ml-2 rounded-full border border-slate-300 bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-slate-700">
+              Admin
+            </span>
           )}
         </Link>
 
