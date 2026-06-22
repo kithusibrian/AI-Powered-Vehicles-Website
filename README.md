@@ -211,35 +211,25 @@ Car ← [indexes on: make, model, bodyType, price, status, featured]
 
 ## Deployment
 
-### Production-Ready
+This Next.js application is optimized for deployment on Vercel. You can deploy directly from your GitHub repository using the Vercel platform.
+The Project also uses docker for containerization thou it isnt supported by vercel.Hence not included in The Github commit
 
-The app follows Next.js best practices for deployment:
+Refer to the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for detailed instructions.
 
-- **Vercel**: Zero-config deployment with automatic SSL, staging environments, and preview deployments
-- **Docker**: Included Dockerfile for self-hosted or cloud deployments (AWS, GCP, DigitalOcean, etc.)
-- **Environment**: Production requires all service credentials (database, Clerk, Supabase, Gemini, Arcjet)
+## Contributing
 
-### Example: Deploy to Vercel
+Contributions are welcome! Please open issues or submit pull requests for bug fixes, enhancements, or new features.
 
-```bash
-npm install -g vercel
-vercel --prod
-```
+## References
 
-## Testing & Quality
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Supabase Documentation](https://supabase.com/docs)
+- [Prisma ORM Documentation](https://www.prisma.io/docs/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [SHADCN UI Documentation](https://ui.shadcn.com/docs)
+- [Arcjet Documentation](https://docs.arcjet.com/)
 
-- **Linting**: ESLint with Next.js rules configured
-- **Type Safety**: TypeScript for static type checking across server and client
-- **Manual Testing Checklist**: Browse, filter, search with AI, auth flows, admin CRUD, image uploads, booking workflows
-- **CI/CD Ready**: Dockerized for GitHub Actions or GitLab CI
+---
 
-## What This Project Demonstrates
-
-✅ **Full-Stack Development**: React frontend → Next.js middleware → PostgreSQL backend  
-✅ **Modern Patterns**: Server Actions, App Router, React Server Components, TypeScript  
-✅ **AI Integration**: Real-time vision API calls, structured data extraction, rate limiting  
-✅ **Authentication**: Third-party OAuth (Clerk), protected routes, role-based access (USER/ADMIN)  
-✅ **Database Design**: Relational schema, migrations, indexes, transactions  
-✅ **File Management**: Cloud storage integration, signed URLs, CDN optimization  
-✅ **API Security**: Rate limiting, bot protection, input validation  
-✅ **Deployment**: Multi-platform (Vercel, Docker, self-hosted)
+You are full of shiiiit 😂😂😂😂😂😂😂😂
+POV: Terrible UI from the most cooked person in the world rn
