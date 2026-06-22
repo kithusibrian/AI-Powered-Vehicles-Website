@@ -1,5 +1,8 @@
 # CarsAI
 
+🔗 Live Demo: [(https://ai-powered-vehicles-website.vercel.app/)]
+💻 GitHub: [(https://github.com/kithusibrian/AI-Powered-Vehicles-Website)]
+
 **AI-Powered Vehicle Marketplace** — A production-grade Next.js full-stack application demonstrating modern web architecture, AI integration, and scalable design patterns. CarsAI enables dealerships to manage vehicle inventory with AI-assisted workflows, while customers browse, save, and book test drives through an intuitive marketplace interface.
 
 ### Core Value Proposition
