@@ -230,6 +230,3 @@ Contributions are welcome! Please open issues or submit pull requests for bug fi
 - [Arcjet Documentation](https://docs.arcjet.com/)
 
 ---
-
-You are full of shiiiit 😂😂😂😂😂😂😂😂
-POV: Terrible UI from the most cooked person in the world rn
