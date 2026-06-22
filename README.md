@@ -106,5 +106,3 @@ Contributions are welcome! Please open issues or submit pull requests for bug fi
 
 ---
 
-You are full of shiiiit 😂😂😂😂😂😂😂😂
-POV: Terrible UI from the most cooked person in the world rn
